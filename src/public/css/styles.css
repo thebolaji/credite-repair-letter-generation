@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Swanky+and+Moo+Moo&display=swap');
+
+body {
+        font-family: "Swanky and Moo Moo",Arial, sans-serif, cursive;
+        font-style: normal;
+        font-size: medium;
+        margin: 0;
+        padding: 20px;
+        font-weight: 400;
+    }
+    .flex-container {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+    .left, .right {
+        width: 50%;
+    }
+    .section {
+        margin-bottom: 20px;
+    }
+    .highlighted-text {
+        color: cadetblue;
+    }
+
+    header {
+        margin-bottom: 40px;
+    }

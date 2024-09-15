@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Letter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+        body {
+             font-family: "Indie Flower",Arial, sans-serif, cursive !important;
+            font-size: 13px !important;
+            margin: 0;
+            font-weight: 600 !important;
+            line-height: 1.2 !important;
+        }
+        .flex-container {
+            line-height: 0.5;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;        
+            align-items: flex-start;       
+            width: 90%;                    
+        }
+        .left, {
+            width: 45%;
+        }
+
+        .right {
+            width: 45%;
+            text-align: right; 
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+        .highlighted-text {
+        color: fuchsia;
+        }
+        .letter-footer {
+            line-height: 0.5;
+        }
+        header {
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="flex-container">
+            <div class="left">
+                <p>{{fullName}}</p>
+                <p>{{Address}}</p>
+                <p>SSN: {{SSN}}</p>
+                <p>DOB: {{DOB}}</p>
+            </div>
+            <div class="right">
+                <p>{{bureauName}}</p>
+                <p>{{poBOX}}</p>
+                <p>{{bureauAddress}}</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main content will go here -->
+    {{{body}}}
+</body>
+</html>

@@ -1,5 +1,12 @@
-npm install                 # Install dependencies
-npm run dev                   # Start the development server
-npm run start                 #Start the production server
+# Commands
 
-Route to test the API: http://localhost:3000/generate-file
+- `npm run dev`  
+   Start the development server.
+
+- `npm run start`  
+   Start the production server.
+
+## Route to Test the API
+
+You can test the API by navigating to:  
+[http://localhost:3000/generate-file](http://localhost:3000/generate-file)

@@ -1,5 +1,8 @@
 # Commands
 
+- `npm install`  
+   Install all the dependencies.
+   
 - `npm run dev`  
    Start the development server.
 

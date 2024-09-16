@@ -7,35 +7,32 @@ const fs = require("fs").promises;
 const router = express.Router();
 
 // API endpoint to generate PDF
-router.get("/", async (req, res) => {
+router.get("/:category/:letter", async (req, res) => {
   try {
-    // Data to inject into the template
+    const { category, letter } = req.params; // Get category and letter type from URL
     const data = {
       fullName: "John Doe",
       Address: "123 Main St, New York, NY",
       SSN: "123-45-6789",
       DOB: "01/01/1980",
-      bureauName: "Equifax Information Services, LLC",
+      bureauName: "Equifax",
       poBOX: "PO Box 740256",
-      bureauAddress: "Atlanta, GA 30374-0256",
+      bureauAddress: "Atlanta, GA",
       NAME: "John Doe",
       ADDRESS: "123 Main St, New York, NY",
     };
 
     // Render the letter template with the layout
-    const html = await renderTemplateWithLayout("letter3", data);
-    // console.log(html);
+    const html = await renderTemplateWithLayout(category, letter, data);
+    console.log(html);
+
     // Launch Puppeteer to generate PDF
     const browser = await puppeteer.launch({
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
       headless: true,
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
     const page = await browser.newPage();
-    // await page.goto(url, { waitUntil: "load", timeout: 0 });
-
-    // await page.setContent(html, { waitUntil: "domcontentloaded" });
     await page.setContent(html, { waitUntil: "networkidle0", timeout: 0 });
-
     const byteArray = await page.pdf({
       path: "my_letter.pdf",
       format: "A4",
@@ -49,6 +46,11 @@ router.get("/", async (req, res) => {
         left: "10mm", // Left margin
       },
     });
+    await browser.close();
+
+    // Set the file for download
+    res.contentType("application/pdf");
+    // res.setHeader("Content-Disposition", "attachment; filename=letter.pdf");
 
     const buffer = Buffer.from(byteArray, "binary");
 
@@ -56,7 +58,7 @@ router.get("/", async (req, res) => {
 
     // Set the file for download
     res.contentType("application/pdf");
-    // res.setHeader("Content-Disposition", "attachment; filename=letter.pdf");
+
     return res.send(buffer);
   } catch (error) {
     console.error(error);
@@ -65,15 +67,17 @@ router.get("/", async (req, res) => {
 });
 
 // Helper function to render Handlebars template with layout
-const renderTemplateWithLayout = async (templateName, data) => {
+const renderTemplateWithLayout = async (category, templateName, data) => {
   try {
     const layoutPath = path.join(__dirname, "../views/layout.hbs");
     const layoutContent = await fs.readFile(layoutPath, "utf8");
     const layoutTemplate = Handlebars.compile(layoutContent);
 
+    // Load the letter template dynamically from the category folder
     const templatePath = path.join(
       __dirname,
       "../views",
+      category,
       `${templateName}.hbs`
     );
     const templateContent = await fs.readFile(templatePath, "utf8");
